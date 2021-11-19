@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KUSF 데이터분석 조추첨 사이트</title>
+    
+    <link rel="stylesheet" href="style.css">
+    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    
+    <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div id="title">KUSF 데이터분석 프로젝트 조편성</div>
+    <div id="member"></div>
+    
+    <div id="btn">
+        <button type="button" class="btn btn-primary" onclick="btn_clicked()" style="width: 500px;">추첨</button>
+    </div>
+    
+    <div id="result">
+        <!-- <div>1조: <span id="group1"></span></div>
+        <div>2조: <span id="group2"></span></div>
+        <div>3조: <span id="group3"></span></div>
+        <div>4조: <span id="group4"></span></div>
+        <div>5조: <span id="group5"></span></div>
+        <div>6조: <span id="group6"></span></div> -->
+        <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">First</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">1조</th>
+                <td id="group1"></td>
+              </tr>
+              <tr>
+                <th scope="row">2조</th>
+                <td id="group2"></td>
+              </tr>
+              <tr>
+                <th scope="row">3조</th>
+                <td id="group3"></td>
+              </tr>
+              <tr>
+                <th scope="row">4조</th>
+                <td id="group4"></td>
+              </tr>
+              <tr>
+                <th scope="row">5조</th>
+                <td id="group5"></td>
+              </tr>
+              <tr>
+                <th scope="row">6조</th>
+                <td id="group6"></td>
+              </tr>
+            </tbody>
+          </table>
+    </div>    
+    
+    <script>
+
+        var student = ['박상욱', '장현진', '서성호', '이용진', '김소원', '정재경', '배강열', '장경준', '유동림', '박소현', '김희주', '김나현', '조혜나', '이진경', '정은선', '김서현', '김나연', '김정우'];
+        $('#member').append(student.join(", "));
+
+        function sleep (ms) {
+          return new Promise(
+            resolve => setTimeout(resolve, ms)
+          );
+        }
+
+        function shuffle(array) {
+            array.sort(() => Math.random() - 0.5);
+        }
+
+        var cnt = 0;
+        var selected;
+
+        async function btn_clicked(){
+            shuffle(student);
+            selected = student.pop();
+            $('#member').html(student.join(", "));
+            if (cnt < 3){
+                $('#group1').append(selected + ' ');
+                
+                
+            } else if (cnt < 6) {
+                $('#group2').append(selected+ ' ');
+                
+            } else if (cnt < 9) {
+                $('#group3').append(selected+ ' ');
+                
+            } else if (cnt < 12) {
+                $('#group4').append(selected+ ' ');
+                
+            } else if (cnt < 15) {
+                $('#group5').append(selected+ ' ');
+                
+            } else if (cnt < 18) {
+                $('#group6').append(selected+ ' ');
+                
+            }
+
+            // sleep(1000);
+
+            if (cnt == 2){
+                    await sleep(1000);
+                    alert('1조 완성!');
+                } else if (cnt == 5){
+                    await sleep(1000);
+                    alert('2조 완성!');
+                } else if (cnt == 8){
+                    await sleep(1000);
+                    alert('3조 완성!');
+                } else if (cnt == 11){
+                    await sleep(1000);
+                    alert('4조 완성!');
+                } else if (cnt == 14){
+                    await sleep(1000);
+                    alert('5조 완성!');
+                } else if (cnt == 17){
+                    await sleep(1000);
+                    alert('6조 완성!');
+                }
+            
+            cnt ++;
+        }   
+        
+
+        // $(document).ready(function(){
+            
+        // });
+        
+    </script>
+
+</body>
+
+
+</html>

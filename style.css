@@ -1,0 +1,35 @@
+@font-face {
+    font-family: 'SBAggroB';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/SBAggroB.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+#member, #result {
+    width: 60%;
+    margin: 50px auto;
+    text-align:center;
+}
+
+table {
+    width: 60%;
+    margin: 50px auto;
+    text-align:center;
+}
+
+#title {
+    text-align: center;
+    font-size: x-large;
+    height: 10vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'SBAggroB';
+}
+
+#btn {
+    text-align: center;
+    margin: 50px auto;
+    
+}
+
