@@ -10,135 +10,132 @@
     
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     
-    <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+    <!-- vue.js cdn -->
+    <script src="https://unpkg.com/vue@3"></script> 
 </head>
 <body>
+  <div id="app">
     <div id="title">KUSF 데이터분석 프로젝트 조편성</div>
-    <div id="member"></div>
-    
-    <div id="btn">
-        <button type="button" class="btn btn-primary" onclick="btn_clicked()" style="width: 500px;">추첨</button>
+
+    <div id="member">
+      <div v-for="(a, i) in student" :key="i" >{{a}}</div>
     </div>
-    
+
+    <div id="btn">
+      <button type="button" class="btn btn-primary" @click="choose()" style="width: 500px;">추첨</button>
+    </div>
+
     <div id="result">
-        <!-- <div>1조: <span id="group1"></span></div>
-        <div>2조: <span id="group2"></span></div>
-        <div>3조: <span id="group3"></span></div>
-        <div>4조: <span id="group4"></span></div>
-        <div>5조: <span id="group5"></span></div>
-        <div>6조: <span id="group6"></span></div> -->
-        <table class="table">
-            <thead>
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">First</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th scope="row">1조</th>
-                <td id="group1"></td>
-              </tr>
-              <tr>
-                <th scope="row">2조</th>
-                <td id="group2"></td>
-              </tr>
-              <tr>
-                <th scope="row">3조</th>
-                <td id="group3"></td>
-              </tr>
-              <tr>
-                <th scope="row">4조</th>
-                <td id="group4"></td>
-              </tr>
-              <tr>
-                <th scope="row">5조</th>
-                <td id="group5"></td>
-              </tr>
-              <tr>
-                <th scope="row">6조</th>
-                <td id="group6"></td>
-              </tr>
-            </tbody>
-          </table>
-    </div>    
-    
-    <script>
+      <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">조원</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">1조</th>
+              <td class="group">
+                  <div v-for="(a, i) in group1" :key="i" >{{a}}</div>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">2조</th>
+              <td class="group">
+                  <div v-for="(a, i) in group2" :key="i" >{{a}}</div>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">3조</th>
+              <td class="group">
+                  <div v-for="(a, i) in group3" :key="i" >{{a}}</div>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">4조</th>
+              <td class="group">
+                  <div v-for="(a, i) in group4" :key="i" >{{a}}</div>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">5조</th>
+              <td class="group">
+                  <div v-for="(a, i) in group5" :key="i" >{{a}}</div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+    </div>   
 
-        var student = ['박상욱', '장현진', '서성호', '이용진', '김소원', '정재경', '배강열', '장경준', '유동림', '박소현', '김희주', '김나현', '조혜나', '이진경', '정은선', '김서현', '김나연', '김정우'];
-        $('#member').append(student.join(", "));
+  </div>
 
-        function sleep (ms) {
-          return new Promise(
+<script>
+  const { createApp } = Vue
+
+  createApp({
+    data() {
+      return {
+        maxnum: 4,
+        student: ['이준서', '손도현', '장현우', '이은정', '이현석', '박진영', '강지아', '박건혁', '오은지', '유지혜', 
+        '김용빈', '이유정', '최승연', '정승은', '조윤아', '채주원', '한지원', '홍의진', '원민기'],
+        group1: [],
+        group2: [],
+        group3: [],
+        group4: [],
+        group5: [],
+        group_num: 1,
+        clicked_cnt: 0,
+      }
+    },
+
+    methods :{
+
+      shuffle(array) {
+            array.sort(() => Math.random() - 0.5);
+      },
+
+      sleep(ms) {
+        return new Promise(
             resolve => setTimeout(resolve, ms)
           );
+      },
+
+      async choose(){
+        this.clicked_cnt++;
+        this.shuffle(this.student);
+        var choosed = this.student.pop();
+
+        if (this.group1.length < this.maxnum){
+          this.group1.push(choosed);
         }
 
-        function shuffle(array) {
-            array.sort(() => Math.random() - 0.5);
+        else if (this.group2.length < this.maxnum){
+          this.group2.push(choosed);
         }
 
-        var cnt = 0;
-        var selected;
+        else if (this.group3.length < this.maxnum){
+          this.group3.push(choosed);
+        }
 
-        async function btn_clicked(){
-            shuffle(student);
-            selected = student.pop();
-            $('#member').html(student.join(", "));
-            if (cnt < 3){
-                $('#group1').append(selected + ' ');
-                
-                
-            } else if (cnt < 6) {
-                $('#group2').append(selected+ ' ');
-                
-            } else if (cnt < 9) {
-                $('#group3').append(selected+ ' ');
-                
-            } else if (cnt < 12) {
-                $('#group4').append(selected+ ' ');
-                
-            } else if (cnt < 15) {
-                $('#group5').append(selected+ ' ');
-                
-            } else if (cnt < 18) {
-                $('#group6').append(selected+ ' ');
-                
-            }
+        else if (this.group4.length < this.maxnum){
+          this.group4.push(choosed);
+        }
 
-            // sleep(1000);
+        else if (this.group5.length < this.maxnum){
+          this.group5.push(choosed);
+        }
 
-            if (cnt == 2){
-                    await sleep(1000);
-                    alert('1조 완성!');
-                } else if (cnt == 5){
-                    await sleep(1000);
-                    alert('2조 완성!');
-                } else if (cnt == 8){
-                    await sleep(1000);
-                    alert('3조 완성!');
-                } else if (cnt == 11){
-                    await sleep(1000);
-                    alert('4조 완성!');
-                } else if (cnt == 14){
-                    await sleep(1000);
-                    alert('5조 완성!');
-                } else if (cnt == 17){
-                    await sleep(1000);
-                    alert('6조 완성!');
-                }
-            
-            cnt ++;
-        }   
-        
+        if (this.clicked_cnt != 0 & this.clicked_cnt % 4 == 0){
+          await this.sleep(100);
+          alert(this.group_num + "조 완성!")
+          this.group_num++;
+        }
+      },
+    }
+  }).mount('#app')
 
-        // $(document).ready(function(){
-            
-        // });
-        
-    </script>
+</script>
 
 </body>
-
-
 </html>

@@ -5,10 +5,19 @@
     font-style: normal;
 }
 
-#member, #result {
+#result {
     width: 60%;
     margin: 50px auto;
-    text-align:center;
+    text-align: center; 
+}
+
+#member {
+    display: flex;
+    width: 60%;
+    margin: 50px auto;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
 }
 
 table {
@@ -31,5 +40,12 @@ table {
     text-align: center;
     margin: 50px auto;
     
+}
+
+.group {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
 }
 
