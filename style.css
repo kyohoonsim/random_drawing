@@ -5,24 +5,26 @@
     font-style: normal;
 }
 
-#result {
+#container {
     width: 60%;
-    margin: 50px auto;
-    text-align: center; 
+    margin: auto; 
+}
+
+#students {
+    background-color: lightskyblue;
 }
 
 #member {
     display: flex;
-    width: 60%;
-    margin: 50px auto;
     justify-content: center;
     gap: 20px;
     flex-wrap: wrap;
+    border: 1px solid lightgray;
+    background-color: lightskyblue;
+    padding: 20px;
 }
 
 table {
-    width: 60%;
-    margin: 50px auto;
     text-align:center;
 }
 
@@ -34,12 +36,6 @@ table {
     align-items: center;
     justify-content: center;
     font-family: 'SBAggroB';
-}
-
-#btn {
-    text-align: center;
-    margin: 50px auto;
-    
 }
 
 .group {

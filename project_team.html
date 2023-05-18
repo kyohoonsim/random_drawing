@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KUSF 데이터분석 조추첨 사이트</title>
+    <title>KUSF 스포츠데이터 조추첨 사이트</title>
     
     <link rel="stylesheet" href="style.css">
     
@@ -15,17 +15,31 @@
 </head>
 <body>
   <div id="app">
-    <div id="title">KUSF 데이터분석 프로젝트 조편성</div>
+    
+    <div id="container">
+      <div id="title">KUSF 스포츠데이터 프로젝트 조편성</div>
+      
+      <h2>조 개수 입력</h2>
+      <input type="text" v-model="group_num" class="form-control">
+      <div>입력된 조 개수: {{group_num}}</div>
+      <div>조당 최대 인원: {{maxnum}}</div>
 
-    <div id="member">
-      <div v-for="(a, i) in student" :key="i" >{{a}}</div>
-    </div>
+      <br><br>
 
-    <div id="btn">
-      <button type="button" class="btn btn-primary" @click="choose()" style="width: 500px;">추첨</button>
-    </div>
+      <h2>학생 명단 입력</h2>
+      <p>학생 이름을 콤마(,)로 구분지어 입력해주세요. ex) 심교훈, 도준혁, 박수호, 최윤식</p>
+      <textarea v-model="student" id="students" name="students" cols="30" rows="5" class="form-control"></textarea>
+      <button type="button" class="btn btn-primary" @click="submit()" style="width: 100%">제출</button>
 
-    <div id="result">
+      <br><br>
+
+      <h2>조 추첨</h2>
+      <button type="button" class="btn btn-primary" @click="choose()" style="width: 100%">추첨</button>
+      
+      <br><br>
+
+      <h2>조편성 결과</h2>
+      
       <table class="table">
           <thead>
             <tr>
@@ -34,39 +48,15 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <th scope="row">1조</th>
-              <td class="group">
-                  <div v-for="(a, i) in group1" :key="i" >{{a}}</div>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row">2조</th>
-              <td class="group">
-                  <div v-for="(a, i) in group2" :key="i" >{{a}}</div>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row">3조</th>
-              <td class="group">
-                  <div v-for="(a, i) in group3" :key="i" >{{a}}</div>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row">4조</th>
-              <td class="group">
-                  <div v-for="(a, i) in group4" :key="i" >{{a}}</div>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row">5조</th>
-              <td class="group">
-                  <div v-for="(a, i) in group5" :key="i" >{{a}}</div>
-              </td>
+            <tr v-for="(a, i) in range(1, group_num)" :key="a">
+              <th scope="row">{{a}}조</th>
+              <td :id="a">{{group[`group`+a]}}</td>
             </tr>
           </tbody>
         </table>
-    </div>   
+        <button type="button" class="btn btn-primary" @click="reset()" style="width: 100%">리셋</button>
+  
+    </div>
 
   </div>
 
@@ -76,20 +66,18 @@
   createApp({
     data() {
       return {
-        maxnum: 4,
-        student: ['이준서', '손도현', '장현우', '이은정', '이현석', '박진영', '강지아', '박건혁', '오은지', '유지혜', 
-        '김용빈', '이유정', '최승연', '정승은', '조윤아', '채주원', '한지원', '홍의진', '원민기'],
-        group1: [],
-        group2: [],
-        group3: [],
-        group4: [],
-        group5: [],
-        group_num: 1,
+        student: '', // 학생1, 학생2, 학생3, 학생4, 학생5, 학생6, 학생7, 학생8, 학생9, 학생10, 학생11, 학생12, 학생13, 학생14, 학생15, 학생16, 학생17, 학생18, 학생19, 학생20
+        maxnum: null,
+        group_num: null,
         clicked_cnt: 0,
+        group: {},
       }
     },
 
     methods :{
+      range(start, end) {
+        return Array.from({ length: end - start + 1 }, (_, index) => start + index);
+      },
 
       shuffle(array) {
             array.sort(() => Math.random() - 0.5);
@@ -101,36 +89,46 @@
           );
       },
 
-      async choose(){
-        this.clicked_cnt++;
+      reset() {
+        this.clicked_cnt = 0;
+        this.student = '';
+        this.maxnum = null;
+        this.group_num = null;
+        this.group = {};
+      },
+
+      submit() {
+        this.student = this.student.split(',');
+        if (this.student.length % this.group_num == 0){
+          this.maxnum = parseInt(this.student.length / this.group_num);
+        } else {
+          this.maxnum = parseInt(this.student.length / this.group_num) + 1;
+        };
+
+        for (var i = 1; i <= this.group_num; i++){ 
+          this.group[`group`+i] = [];
+        }
+        console.log(this.group);
+      },
+
+      async choose(){        
+        if (this.student.length == 0){
+          alert('조편성이 완료되었습니다.');
+          return 0;
+        }
+
+        if (this.clicked_cnt >= this.group_num){
+          this.clicked_cnt = 1;
+        } else {
+          this.clicked_cnt++;
+        }
         this.shuffle(this.student);
         var choosed = this.student.pop();
 
-        if (this.group1.length < this.maxnum){
-          this.group1.push(choosed);
-        }
 
-        else if (this.group2.length < this.maxnum){
-          this.group2.push(choosed);
-        }
+        this.group[`group`+this.clicked_cnt].push(choosed);
+        console.log(this.group);
 
-        else if (this.group3.length < this.maxnum){
-          this.group3.push(choosed);
-        }
-
-        else if (this.group4.length < this.maxnum){
-          this.group4.push(choosed);
-        }
-
-        else if (this.group5.length < this.maxnum){
-          this.group5.push(choosed);
-        }
-
-        if (this.clicked_cnt != 0 & this.clicked_cnt % 4 == 0){
-          await this.sleep(100);
-          alert(this.group_num + "조 완성!")
-          this.group_num++;
-        }
       },
     }
   }).mount('#app')
