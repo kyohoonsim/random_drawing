@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KUSF 스포츠데이터 조추첨 사이트</title>
+    <title>프로젝트 랜덤 조추첨 사이트</title>
     
     <link rel="stylesheet" href="style.css">
     
@@ -17,7 +17,7 @@
   <div id="app">
     
     <div id="container">
-      <div id="title">KUSF 스포츠데이터 프로젝트 조편성</div>
+      <div id="title">프로젝트 랜덤 조추첨 사이트</div>
       
       <h2>조 개수 입력</h2>
       <input type="text" v-model="group_num" class="form-control">
@@ -41,20 +41,20 @@
       <h2>조편성 결과</h2>
       
       <table class="table">
-          <thead>
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">조원</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="(a, i) in range(1, group_num)" :key="a">
-              <th scope="row">{{a}}조</th>
-              <td :id="a">{{group[`group`+a]}}</td>
-            </tr>
-          </tbody>
-        </table>
-        <button type="button" class="btn btn-primary" @click="reset()" style="width: 100%">리셋</button>
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">조원</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(a, i) in range(1, group_num)" :key="a">
+            <th scope="row">{{a}}조</th>
+            <td :id="a">{{group[`group`+a]}}</td>
+          </tr>
+        </tbody>
+      </table>
+      <button type="button" class="btn btn-primary" @click="reset()" style="width: 100%">리셋</button>
   
     </div>
 
