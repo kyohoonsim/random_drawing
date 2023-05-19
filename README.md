@@ -8,7 +8,8 @@
 - bootstrap
 
 ## 화면 예시
-![꾸미기 Screenshot_4](https://user-images.githubusercontent.com/58966525/189811290-cd1c48b5-1020-49d4-b8bf-72bc336b0e45.jpg)
+![random_drawing](https://github.com/kyohoonsim/random_drawing/assets/58966525/9218de23-8b56-4645-ba9b-58a5bd721cd8)
+
 
 ## 깃 커밋 컨벤션
 - ENH: Enhancement, new functionality
